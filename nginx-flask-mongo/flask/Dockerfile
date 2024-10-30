@@ -13,6 +13,7 @@ CMD ["python3", "server.py"]
 FROM builder as dev-envs
 
 RUN <<EOF
+$ DOCKER_BUILDKIT=1 docker build .
 apk update
 apk add git
 EOF
