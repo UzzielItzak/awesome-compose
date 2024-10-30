@@ -37,7 +37,7 @@ steps:
     args:
       - '-c'
       - |
-        gsutil cp -r /builder/logs gs://$BUCKET_NAME/logs/$BUILD_ID
+        gsutil cp -r /builder/logs gs://440019-cloud-build-logging/logs/$BUILD_ID
 images:
   - 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest'
   - 'gcr.io/$PROJECT_ID/nginx:latest'
