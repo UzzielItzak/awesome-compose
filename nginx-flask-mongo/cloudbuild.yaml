@@ -3,15 +3,14 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
     args: ['-c', 'cd nginx-flask-mongo/flask'] 
-  # Build the Docker image
+
+  # Build the Flask app image (note the added '.')
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-flask-mongo:$COMMIT_SHA', '.']
-  # Build the Flask app image
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest', '.'] 
+
+  # Build the Nginx image (adjust path to ' ../nginx')
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest', 'flask']
-  # Build the Nginx image
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx:latest', 'nginx']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx:latest', '../nginx']
   # Push the images to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest']
