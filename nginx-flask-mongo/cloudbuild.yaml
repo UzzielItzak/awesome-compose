@@ -45,4 +45,4 @@ images:
   - 'gcr.io/$PROJECT_ID/nginx:latest'
 options:
   logging: CLOUD_LOGGING_ONLY
-  BUILDPLATFORM: 'cloud-builders'
+  buildPlatform: 'cloud-builders' 
