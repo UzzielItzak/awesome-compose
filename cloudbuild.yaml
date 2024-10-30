@@ -1,0 +1,36 @@
+steps:
+  # Build the Flask app image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest', 'flask']
+  # Build the Nginx image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx:latest', 'nginx']
+  # Push the images to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/nginx:latest']
+  # Lint with pyflakes
+  - name: 'python:3.9'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - 'pip install pyflakes && pyflakes flask/*.py'
+  # Lint with mypy
+  - name: 'python:3.9'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - 'pip install mypy && mypy flask/*.py'
+  # Format with black
+  - name: 'python:3.9'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - 'pip install black && black --check flask/*.py'
+  # Apply Kubernetes manifests
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['apply', '-f', 'kubernetes']
+images:
+  - 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest'
+  - 'gcr.io/$PROJECT_ID/nginx:latest'
