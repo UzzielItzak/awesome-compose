@@ -31,6 +31,15 @@ steps:
   # Apply Kubernetes manifests
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'kubernetes']
+  # Export logs to Cloud Storage
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gsutil cp -r /builder/logs gs://$BUCKET_NAME/logs/$BUILD_ID
 images:
   - 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest'
   - 'gcr.io/$PROJECT_ID/nginx:latest'
+options:
+  logging: CLOUD_LOGGING_ONLY
