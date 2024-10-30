@@ -8,18 +8,18 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 COPY . .
 
-CMD ["python3", "server.py"]
+# CMD ["python3", "server.py"]
 
-FROM builder as dev-envs
+# FROM builder as dev-envs
 
-RUN apk update &&  \
-    apk add git
+# RUN apk update &&  \
+#     apk add git
 
-RUN addgroup -S docker && \
-    adduser -S --shell /bin/bash --ingroup docker vscode
+# RUN addgroup -S docker && \
+#     adduser -S --shell /bin/bash --ingroup docker vscode
 
 
-# install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
+# # install Docker tools (cli, buildx, compose)
+# COPY --from=gloursdocker/docker / /
 
 CMD ["python3", "server.py"]
