@@ -1,12 +1,8 @@
 steps:
-  # Set the working directory
-  - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
-    args: ['-c', 'cd nginx-flask-mongo/flask'] 
-
   # Build the Flask app image (note the added '.')
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest', '.'] 
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest', '.']
+    dir: 'nginx-flask-mongo' # Added dir option here
 
   # Build the Nginx image (adjust path to ' ../nginx')
   - name: 'gcr.io/cloud-builders/docker'
