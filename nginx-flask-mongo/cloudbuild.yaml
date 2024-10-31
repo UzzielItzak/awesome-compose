@@ -20,7 +20,7 @@ steps:
   # Build the Nginx frontend image
   - name: 'gcr.io/cloud-builders/docker'
     dir: 'nginx-flask-mongo'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-frontend:$COMMIT_SHA', '-f', 'nginx-flask-mongo/nginx.Dockerfile', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-frontend:$COMMIT_SHA', '-f', 'nginx.Dockerfile', '.']
 
   # Push the images to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
