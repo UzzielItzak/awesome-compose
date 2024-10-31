@@ -1,39 +1,33 @@
 steps:
-  # Linting
-  - name: 'python:3.9'
+  # Build the Flask backend image
+  - name: 'gcr.io/cloud-builders/docker'
     dir: 'nginx-flask-mongo/flask'
-    entrypoint: 'pip'
-    args: ['install', 'pyflakes', 'mypy', 'black']
-  - name: 'python:3.9'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/flask-backend:$COMMIT_SHA', '.']
+
+  # Lint the Flask backend code
+  - name: 'gcr.io/cloud-builders/docker'
     dir: 'nginx-flask-mongo/flask'
     entrypoint: 'pyflakes'
     args: ['.']
-  - name: 'python:3.9'
-    dir: 'nginx-flask-mongo/flask'
-    entrypoint: 'mypy'
-    args: ['.']
-  - name: 'python:3.9'
-    dir: 'nginx-flask-mongo/flask'
-    entrypoint: 'black'
-    args: ['.', '--check']
 
-  # Build the Flask image
-  - name: 'gcr.io/cloud-builders/docker'
-    dir: 'nginx-flask-mongo/flask'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/flask-backend', '.']
-
-  # Push the Flask image to Google Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/flask-backend']
-
-  # Build the Nginx image
+  # Build the Nginx frontend image
   - name: 'gcr.io/cloud-builders/docker'
     dir: 'nginx-flask-mongo'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-frontend', '-f', 'nginx.Dockerfile', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-frontend:$COMMIT_SHA', '-f', 'nginx-flask-mongo/nginx.Dockerfile', '.']
 
-  # Push the Nginx image to Google Container Registry
+  # Push the images to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/nginx-frontend']
+    args: ['push', 'gcr.io/$PROJECT_ID/flask-backend:$COMMIT_SHA']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/nginx-frontend:$COMMIT_SHA']
 
-# Export logs to Cloud Storage
-logsBucket: 'gs://440019-cloud-build-logging'
+  # Apply Kubernetes manifests
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['apply', '-f', 'nginx-flask-mongo/kubernetes.yaml']
+
+  # Export logs to Cloud Storage
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gsutil'
+    args: ['cp', 'gs://440019-cloud-build-logging/$BUILD_ID.log']
+options:
+  logging: CLOUD_LOGGING_ONLY
