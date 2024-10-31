@@ -1,6 +1,6 @@
 FROM nginx
 
-COPY nginx/nginx.conf /tmp/nginx.conf
+COPY nginx.conf /tmp/nginx.conf
 
 ENV FLASK_SERVER_ADDR=flask-backend:9091
 
