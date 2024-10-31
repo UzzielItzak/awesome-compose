@@ -7,12 +7,10 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application   
- code
+# Copy application code
 COPY . .
 
-# Expose the   
- port your Flask app listens on
+# Expose the port the Flask app listens on
 EXPOSE 9090
 
 # Run the Flask app
