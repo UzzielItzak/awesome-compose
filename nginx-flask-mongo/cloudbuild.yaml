@@ -15,7 +15,7 @@ steps:
     entrypoint: 'bash'
     args:
       - '-c'
-      - 'pip install pyflakes && pyflakes flask/*.py'
+      - 'pip install pyflakes && pyflakes nginx-flask-mongo/flask/*.py'
 
   # Build the Nginx frontend image
   - name: 'gcr.io/cloud-builders/docker'
