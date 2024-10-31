@@ -1,25 +1,19 @@
 # syntax=docker/dockerfile:1.4
-FROM alpine AS builder
+FROM python:3.9-slim-buster AS builder
 
-WORKDIR /src
-COPY requirements.txt /src
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip3 install -r requirements.txt --no-cache-dir
+WORKDIR /app
 
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application   
+ code
 COPY . .
 
-CMD ["python3", "server.py"]
+# Expose the   
+ port your Flask app listens on
+EXPOSE 9090
 
-FROM builder as dev-envs
-
-RUN apk update && \
-    apk add git
-
-RUN addgroup -S docker && \
-    adduser -S --shell /bin/bash --ingroup docker vscode
-
-
-# install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
-
+# Run the Flask app
 CMD ["python3", "server.py"]
