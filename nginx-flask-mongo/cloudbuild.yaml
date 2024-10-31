@@ -1,18 +1,18 @@
 steps:
   # Linting
-  - name: 'python:3.9-slim-buster'
+  - name: 'python:3.9
     dir: 'nginx-flask-mongo/flask'
     entrypoint: 'pip'
     args: ['install', 'pyflakes', 'mypy', 'black']
-  - name: 'python:3.9-slim-buster'
+  - name: 'python:3.9'
     dir: 'nginx-flask-mongo/flask'
     entrypoint: 'pyflakes'
     args: ['.']
-  - name: 'python:3.9-slim-buster'
+  - name: 'python:3.9'
     dir: 'nginx-flask-mongo/flask'
     entrypoint: 'mypy'
     args: ['.']
-  - name: 'python:3.9-slim-buster'
+  - name: 'python:3.9'
     dir: 'nginx-flask-mongo/flask'
     entrypoint: 'black'
     args: ['.', '--check']
