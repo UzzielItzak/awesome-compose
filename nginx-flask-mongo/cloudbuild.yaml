@@ -7,7 +7,7 @@ steps:
   # Lint the Flask backend code
   - name: 'gcr.io/cloud-builders/docker'
     dir: 'nginx-flask-mongo/flask'
-    entrypoint: 'pyflakes'
+    entrypoint: '/usr/local/bin/pyflakes'
     args: ['.']
 
   # Build the Nginx frontend image
