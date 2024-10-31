@@ -3,21 +3,40 @@ steps:
     args: ['pull', 'docker/dockerfile:experimental']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['pull', 'docker/dockerfile:1.0-experimental']
-  # Build the Flask app image (note the added '.')
+  # # Build the Flask app image (note the added '.')
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest', '.']
+  #   dir: 'nginx-flask-mongo/flask' # Added dir option here
+  #   env:
+  #   - "DOCKER_BUILDKIT=1"
+
+  # # Build the Nginx image (adjust path to ' ../nginx')
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx:latest', '../nginx']
+  # # Push the images to Google Container Registry
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['push', 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest']
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['push', 'gcr.io/$PROJECT_ID/nginx:latest']
+
+    # Build the Flask app image 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest', '.']
-    dir: 'nginx-flask-mongo/flask' # Added dir option here
+    dir: 'flask' # Build context is the 'flask' directory
     env:
     - "DOCKER_BUILDKIT=1"
 
-  # Build the Nginx image (adjust path to ' ../nginx')
+  # Build the Nginx image 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx:latest', '../nginx']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx:latest', '.']
+    dir: 'nginx' # Build context is the 'nginx' directory
+
   # Push the images to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/nginx-flask-mongo:latest']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/nginx:latest']
+
   # Lint with pyflakes
   - name: 'python:3.9'
     entrypoint: 'bash'
@@ -36,9 +55,9 @@ steps:
     args:
       - '-c'
       - 'pip install black && black --check flask/*.py'
-  # Apply Kubernetes manifests
+  # Apply Kubernetes manifests (assuming your manifests are in the root directory)
   - name: 'gcr.io/cloud-builders/kubectl'
-    args: ['apply', '-f', 'kubernetes']
+    args: ['apply', '-f', '.'] 
   # Export logs to Cloud Storage
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'

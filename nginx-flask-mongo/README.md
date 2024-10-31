@@ -5,6 +5,7 @@ Project structure:
 ```
 .
 ├── compose.yaml
+├── cloudbuild.yaml
 ├── flask
 │   ├── Dockerfile
 │   ├── requirements.txt
