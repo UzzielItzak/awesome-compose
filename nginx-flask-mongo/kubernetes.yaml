@@ -48,8 +48,7 @@ spec:
         app: nginx-frontend
     spec:
       containers:
-      - name: nginx-frontend   
-
+      - name: nginx-frontend
         image: gcr.io/$PROJECT_ID/nginx-frontend:$COMMIT_SHA
         ports:
         - containerPort: 80
