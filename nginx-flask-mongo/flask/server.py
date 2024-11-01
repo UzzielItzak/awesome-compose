@@ -12,7 +12,7 @@ client = MongoClient("mongo:27017")
 def todo():
     try:
         client.admin.command('ismaster')
-    except pymongo.errors.ConnectionFailure as e:
+    except client.ConnectionFailure as e:
         return f"Error connecting to MongoDB: {e}" 
     except Exception as e:
         return f"An unexpected error occurred: {e}"

@@ -4,12 +4,6 @@ steps:
     dir: 'nginx-flask-mongo/flask'
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/flask-backend:${COMMIT_SHA}', '.']
 
-  # # Lint the Flask backend code
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   dir: 'nginx-flask-mongo/flask'
-  #   entrypoint: 'pyflakes'
-  #   args: ['.']
-
   # Lint with pyflakes
   - name: 'python:3.9'
     entrypoint: 'bash'
