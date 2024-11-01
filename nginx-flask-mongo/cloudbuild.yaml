@@ -31,8 +31,8 @@ steps:
   # Apply Kubernetes manifests
   - name: 'gcr.io/cloud-builders/kubectl'
     env:
-    - 'CLOUDSDK_COMPUTE_REGION=${_CLOUDSDK_COMPUTE_REGION}'
-    - 'CLOUDSDK_COMPUTE_CLUSTER=${_CLOUDSDK_COMPUTE_CLUSTER}'
+    - 'CLOUDSDK_COMPUTE_REGION=us-east1'
+    - 'CLOUDSDK_COMPUTE_CLUSTER=nginx-flask-mongo-app'
     args: ['apply', '-f', 'nginx-flask-mongo/kubernetes.yaml']
 
 
