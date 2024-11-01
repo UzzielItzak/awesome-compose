@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-backend
-        image:   
- gcr.io/$PROJECT_ID/flask-backend:$COMMIT_SHA
+        image: gcr.io/$PROJECT_ID/flask-backend:$COMMIT_SHA
         ports:
         - containerPort: 9090
         env:
@@ -86,8 +85,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name:   
- mongo
+  name: mongo
 spec:
   selector:
     matchLabels:
@@ -125,5 +123,4 @@ spec:
   ports:
   - protocol: TCP
     port: 27017
-    targetPort:
-  27017
+    targetPort: 27017
