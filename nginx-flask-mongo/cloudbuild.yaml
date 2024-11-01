@@ -2,7 +2,7 @@ steps:
   # Build the Flask backend image
   - name: 'gcr.io/cloud-builders/docker'
     dir: 'nginx-flask-mongo/flask'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/flask-backend:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/flask-backend:${COMMIT_SHA}', '.']
 
   # # Lint the Flask backend code
   # - name: 'gcr.io/cloud-builders/docker'
@@ -20,13 +20,13 @@ steps:
   # Build the Nginx frontend image
   - name: 'gcr.io/cloud-builders/docker'
     dir: 'nginx-flask-mongo/nginx'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-frontend:$COMMIT_SHA', '-f', 'nginx.Dockerfile', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/nginx-frontend:${COMMIT_SHA}', '-f', 'nginx.Dockerfile', '.']
 
   # Push the images to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/flask-backend:$COMMIT_SHA']
+    args: ['push', 'gcr.io/$PROJECT_ID/flask-backend:${COMMIT_SHA}']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/nginx-frontend:$COMMIT_SHA']
+    args: ['push', 'gcr.io/$PROJECT_ID/nginx-frontend:${COMMIT_SHA}']
 
   # Apply Kubernetes manifests
   - name: 'gcr.io/cloud-builders/kubectl'

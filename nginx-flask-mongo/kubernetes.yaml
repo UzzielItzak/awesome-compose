@@ -108,8 +108,7 @@ spec:
       volumes:
       - name: mongo-persistent-storage
         persistentVolumeClaim:
-          claimName: mongo-pv-claim   
-
+          claimName: mongo-pv-claim
 ---
 apiVersion: v1
 kind: Service
