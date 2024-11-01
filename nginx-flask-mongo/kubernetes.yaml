@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-backend
-        image: gcr.io/original-voyage-440019-g7/flask-backend:d4e71f1ecc20546b3d220914783ac1d4189e4e3b
+        image: gcr.io/original-voyage-440019-g7/flask-backend:17f7c279b15ab67ccf7f140c4458d24eb1b581e8
         ports:
         - containerPort: 9090
         env:
@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: nginx-frontend
-        image: gcr.io/original-voyage-440019-g7/nginx-frontend:9d3d679fe108229159c704bc755b3ccd64295b02
+        image: gcr.io/original-voyage-440019-g7/nginx-frontend:17f7c279b15ab67ccf7f140c4458d24eb1b581e8
         ports:
         - containerPort: 80
         env:
