@@ -97,8 +97,7 @@ spec:
         app: mongo
     spec:
       containers:
-      - image: mongo   
-
+      - image: mongo
         name: mongo
         ports:
         - containerPort: 27017
