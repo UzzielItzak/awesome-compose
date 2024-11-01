@@ -12,12 +12,9 @@ client = MongoClient("mongo:27017")
 def todo():
     try:
         client.admin.command('ismaster')
-    except client.ConnectionFailure as e:
-        return f"Error connecting to MongoDB: {e}" 
     except Exception as e:
-        return f"An unexpected error occurred: {e}"
+        return f"Error connecting to MongoDB: {e}"
     return "Hello from the MongoDB client!\n"
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=os.environ.get("FLASK_SERVER_PORT", 9090), debug=True)
