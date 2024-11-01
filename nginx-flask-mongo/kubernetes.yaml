@@ -16,10 +16,10 @@ spec:
       - name: flask-backend
         image: gcr.io/original-voyage-440019-g7/flask-backend:latest
         ports:
-        - containerPort: 9090
+        - containerPort: 9091
         env:
         - name: FLASK_SERVER_PORT
-          value: "9090"
+          value: "9091"
         resources: 
           requests:
             memory: "50Mi"
@@ -37,8 +37,8 @@ spec:
     app: flask-backend
   ports:
   - protocol: TCP
-    port: 9090
-    targetPort: 9090
+    port: 9091
+    targetPort: 9091
 ---
 apiVersion: apps/v1
 kind: Deployment
