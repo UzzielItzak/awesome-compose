@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-backend
-        image: gcr.io/$PROJECT_ID/flask-backend:$COMMIT_SHA
+        image: gcr.io/original-voyage-440019-g7/flask-backend:$COMMIT_SHA
         ports:
         - containerPort: 9090
         env:
@@ -49,7 +49,7 @@ spec:
     spec:
       containers:
       - name: nginx-frontend
-        image: gcr.io/$PROJECT_ID/nginx-frontend:$COMMIT_SHA
+        image: gcr.io/original-voyage-440019-g7/nginx-frontend:$COMMIT_SHA
         ports:
         - containerPort: 80
         env:
