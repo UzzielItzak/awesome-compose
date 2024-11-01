@@ -20,6 +20,13 @@ spec:
         env:
         - name: FLASK_SERVER_PORT
           value: "9090"
+        resources: 
+          requests:
+            memory: "50Mi"
+            cpu: "100m"
+          limits:
+            memory: "200Mi"
+            cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
@@ -54,7 +61,14 @@ spec:
         - containerPort: 80
         env:
         - name: FLASK_SERVER_ADDR
-          value: "flask-backend-service:9090" 
+          value: "flask-backend-service:9090"
+        resources:
+          requests:
+            memory: "50Mi"
+            cpu: "100m"
+          limits:
+            memory: "100Mi"
+            cpu: "200m"
 ---
 apiVersion: v1
 kind: Service
