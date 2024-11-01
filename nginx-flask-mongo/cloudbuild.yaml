@@ -35,12 +35,3 @@ steps:
     - 'CLOUDSDK_COMPUTE_REGION=${_CLOUDSDK_COMPUTE_REGION}'
     - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLOUDSDK_COMPUTE_CLUSTER}'
 
-  # Export logs to Cloud Storage
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gsutil'
-    args: ['cp', 'gs://440019-cloud-build-logging/$BUILD_ID.log']
-
-
-
-options:
-  logging: CLOUD_LOGGING_ONLY
